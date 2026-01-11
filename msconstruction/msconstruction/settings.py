@@ -23,10 +23,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'msconstruction.core',
-    'msconstruction.accounts',
-    'msconstruction.booking',
+    'core',
+    'accounts',
+    'booking',
 ]
+
 
 # -------------------------------------------------
 # MIDDLEWARE
