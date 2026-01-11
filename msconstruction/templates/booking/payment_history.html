@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment History | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>My Payments</h1>
+
+    <div class="container">
+
+        {% if payments %}
+            {% for payment in payments %}
+                <div class="card">
+
+                    <p><strong>Booking ID:</strong> {{ payment.booking.id }}</p>
+                    <p><strong>House:</strong> {{ payment.booking.house.name }}</p>
+                    <p><strong>Amount Paid:</strong> ₹{{ payment.amount }}</p>
+                    <p><strong>Payment Type:</strong> {{ payment.payment_type }}</p>
+                    <p><strong>Date:</strong> {{ payment.paid_on|date:"d M Y, H:i" }}</p>
+
+                    <a href="{% url 'invoice_pdf' payment.id %}">
+                        <button style="margin-top:10px;">
+                            Download Invoice (PDF)
+                        </button>
+                    </a>
+
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align:center; font-size:18px;">
+                No payments found.
+            </p>
+        {% endif %}
+
+        <div class="top-actions">
+            <a href="/">← Back to Home</a>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 MS Construction. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Work | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<h1>Select Your Dream House</h1>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+    <div class="filter-buttons">
+        <button onclick="filterType('ALL')">All</button>
+        <button onclick="filterType('1BHK')">1 BHK</button>
+        <button onclick="filterType('2BHK')">2 BHK</button>
+        <button onclick="filterType('3BHK')">3 BHK</button>
+        <button onclick="filterType('DUPLEX')">Duplex</button>
+        <button onclick="filterType('VILLA')">Villa</button>
+    </div>
+
+    <div class="budget-filter">
+        <input type="number" id="budget" placeholder="Max Budget ₹">
+        <button onclick="filterBudget()">Apply</button>
+    </div>
+</div>
+
+<!-- HOUSE GRID -->
+<div class="house-grid">
+
+{% for house in houses %}
+    <div class="house-card"
+         data-type="{{ house.house_type }}"
+         data-price="{{ house.price }}">
+
+        {% if house.image %}
+            <img src="{{ house.image.url }}" alt="{{ house.name }}">
+        {% endif %}
+
+        <div class="house-content">
+            <h3>
+                <a href="{% url 'house_detail' house.id %}">
+                    {{ house.name }}
+                </a>
+            </h3>
+
+            <p class="price">₹{{ house.price }}</p>
+            <p class="type">{{ house.get_house_type_display }}</p>
+
+            <p class="desc">
+                {{ house.description|truncatechars:120 }}
+            </p>
+
+            <!-- GALLERY -->
+            {% if house.images.all %}
+                <div class="gallery">
+                    {% for img in house.images.all %}
+                        <img src="{{ img.image.url }}" alt="Gallery">
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <a href="{% url 'booking' house.id %}">
+                <button class="primary-btn">
+                    Book Now
+                </button>
+            </a>
+        </div>
+    </div>
+{% empty %}
+    <p>No houses available.</p>
+{% endfor %}
+
+</div>
+
+<footer>
+    © 2026 MS Construction. Quality You Can Trust.
+</footer>
+
+<!-- FILTER SCRIPT -->
+<script>
+function filterType(type) {
+    const cards = document.querySelectorAll('.house-card');
+    cards.forEach(card => {
+        card.style.display =
+            (type === 'ALL' || card.dataset.type === type)
+            ? 'block'
+            : 'none';
+    });
+}
+
+function filterBudget() {
+    const max = document.getElementById('budget').value;
+    const cards = document.querySelectorAll('.house-card');
+
+    cards.forEach(card => {
+        const price = parseInt(card.dataset.price);
+        card.style.display =
+            (!max || price <= max)
+            ? 'block'
+            : 'none';
+    });
+}
+</script>
+
+</body>
+</html>

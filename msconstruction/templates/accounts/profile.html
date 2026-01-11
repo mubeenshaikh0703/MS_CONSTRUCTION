@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+        <h1 class="auth-title">My Profile</h1>
+        <p class="auth-subtitle">Manage your personal information</p>
+
+        <!-- PROFILE PHOTO -->
+        <div style="text-align:center; margin-bottom:20px;">
+            <img src="{{ profile.profile_photo.url }}"
+                 alt="Profile Photo"
+                 style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:4px solid #ddd;">
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label style="font-size:13px;">Change Profile Photo</label>
+            <input type="file" name="profile_photo" accept="image/*">
+
+            <input type="text"
+                   name="first_name"
+                   placeholder="First Name"
+                   value="{{ user.first_name }}"
+                   required>
+
+            <input type="text"
+                   name="middle_name"
+                   placeholder="Middle Name (optional)"
+                   value="{{ profile.middle_name }}">
+
+            <input type="text"
+                   name="last_name"
+                   placeholder="Last Name"
+                   value="{{ user.last_name }}"
+                   required>
+
+            <input type="tel"
+                   name="phone"
+                   placeholder="Phone Number"
+                   value="{{ profile.phone }}"
+                   required>
+
+            <input type="date"
+                   name="dob"
+                   value="{{ profile.date_of_birth|date:'Y-m-d' }}"
+                   required>
+
+            <button type="submit" class="auth-btn">
+                Update Profile
+            </button>
+        </form>
+
+        <div class="auth-links">
+    <a href="{% url 'home' %}">← Back to Home</a>
+    <span>•</span>
+    <a href="{% url 'delete_account' %}" style="color:#dc2626;">
+        Delete Account
+    </a>
+</div>
+
+    </div>
+
+</div>
+
+<footer class="auth-footer">
+    © 2026 MS Construction. All Rights Reserved.
+</footer>
+
+</body>
+</html>

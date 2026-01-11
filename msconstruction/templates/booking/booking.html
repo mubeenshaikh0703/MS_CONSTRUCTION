@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>Booking Details</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Selected House -->
+        <input type="text"
+               value="{{ house.name }}  |  ₹{{ house.price }}"
+               readonly>
+
+        <!-- Site Address -->
+        <textarea name="site_address"
+                  placeholder="Enter Site Address"
+                  required></textarea>
+
+        <!-- Start Date -->
+        <input type="date"
+               name="start_date"
+               required>
+
+        <!-- Submit -->
+        <button type="submit" style="width:100%;">
+            Confirm Booking
+        </button>
+    </form>
+
+    <div class="top-actions">
+        <a href="{% url 'select_work' %}">← Back to Houses</a>
+    </div>
+
+    <footer>
+        © 2026 MS Construction. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

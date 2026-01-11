@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Login to continue</p>
+
+        {% if error %}
+            <div class="auth-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input type="text"
+                   name="username"
+                   placeholder="Username"
+                   required>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Password"
+                   required>
+
+            <button type="submit" class="auth-btn">
+                Login
+            </button>
+        </form>
+
+        <div class="auth-links">
+            <a href="{% url 'signup' %}">Create Account</a>
+            <span>•</span>
+            <a href="{% url 'reset_password' %}">Forgot Password?</a>
+        </div>
+    </div>
+
+</div>
+
+<footer class="auth-footer">
+    © 2026 MS Construction. All Rights Reserved.
+</footer>
+
+</body>
+</html>

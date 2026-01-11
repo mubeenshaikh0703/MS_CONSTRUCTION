@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ house.name }} | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>{{ house.name }}</h1>
+
+    <div class="container">
+
+        <!-- Main Image -->
+        {% if house.image %}
+            <div style="text-align:center;">
+                <img src="{{ house.image.url }}"
+                     style="max-width:420px; border-radius:12px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <!-- Gallery -->
+        {% if house.images.all %}
+            <h2>Gallery</h2>
+            <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+                {% for img in house.images.all %}
+                    <img src="{{ img.image.url }}"
+                         width="140"
+                         style="border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.12); transition:0.3s;">
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <!-- Details -->
+        <p><strong>House Type:</strong> {{ house.get_house_type_display }}</p>
+        <p><strong>Price:</strong> ₹{{ house.price }}</p>
+
+        <h3>Description</h3>
+        <p>{{ house.description }}</p>
+
+        <br>
+
+        <!-- Booking Action -->
+        {% if user.is_authenticated %}
+            <a href="{% url 'booking' house.id %}">
+                <button style="width:220px;">
+                    Book This House
+                </button>
+            </a>
+        {% else %}
+            <p>
+                Please <a href="{% url 'login' %}">login</a> to book this house.
+            </p>
+        {% endif %}
+
+        <div class="top-actions">
+            <a href="{% url 'select_work' %}">← Back to Houses</a>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 MS Construction. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

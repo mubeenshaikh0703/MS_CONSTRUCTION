@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <h1>Payment</h1>
+
+    <div class="container">
+
+        <div class="card">
+
+            <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+            <p><strong>House:</strong> {{ booking.house.name }}</p>
+            <p><strong>Total Price:</strong> ₹{{ booking.house.price }}</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label><strong>Select Payment Type</strong></label>
+                <select name="payment_type" required>
+                    <option value="">-- Select --</option>
+                    <option value="Advance">Advance Payment</option>
+                    <option value="Full">Full Payment</option>
+                </select>
+
+                <label><strong>Enter Amount</strong></label>
+                <input type="number"
+                       name="amount"
+                       placeholder="Enter amount in ₹"
+                       required>
+
+                <button type="submit">
+                    Confirm & Pay
+                </button>
+            </form>
+
+        </div>
+
+        <div class="top-actions">
+            <a href="{% url 'select_work' %}">← Back to Houses</a>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 MS Construction. Secure Payment System.
+    </footer>
+
+</body>
+</html>

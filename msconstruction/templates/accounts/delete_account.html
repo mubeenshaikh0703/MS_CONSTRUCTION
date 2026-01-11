@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Account | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+        <h1 class="auth-title" style="color:#dc2626;">Delete Account</h1>
+        <p class="auth-subtitle">
+            This action is <strong>permanent</strong> and cannot be undone.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit"
+                    class="auth-btn"
+                    style="background:#dc2626;">
+                Yes, Delete My Account
+            </button>
+        </form>
+
+        <div class="auth-links">
+            <a href="{% url 'profile' %}">← Cancel & Go Back</a>
+        </div>
+    </div>
+
+</div>
+
+<footer class="auth-footer">
+    © 2026 MS Construction. All Rights Reserved.
+</footer>
+
+</body>
+</html>

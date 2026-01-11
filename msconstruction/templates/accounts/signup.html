@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup | MS Construction</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper">
+
+    <div class="auth-card">
+        <h1 class="auth-title">Create Account</h1>
+        <p class="auth-subtitle">Join MS Construction</p>
+
+        {% if error %}
+            <div class="auth-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if not otp_sent %}
+                <!-- STEP 1 : USER DETAILS -->
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="middle_name" placeholder="Middle Name (optional)">
+                <input type="text" name="last_name" placeholder="Last Name" required>
+
+                <input type="text" name="username" placeholder="Username" required>
+
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="tel" name="phone" placeholder="Phone Number" required>
+
+                <input type="date" name="dob" required>
+
+                <input type="password" name="password" placeholder="Password" required>
+
+                <!-- PASSWORD STRENGTH -->
+                <div class="password-strength">
+                    <div id="strength-bar"></div>
+                    <p id="strength-text"></p>
+                </div>
+
+                <!-- SEND OTP BUTTON -->
+                <button type="submit"
+                        name="send_otp"
+                        class="auth-btn">
+                    Send OTP
+                </button>
+
+            {% else %}
+                <!-- STEP 2 : OTP -->
+                <input type="text"
+                       name="otp"
+                       placeholder="Enter OTP"
+                       required>
+
+                <button type="submit"
+                        name="verify_otp"
+                        class="auth-btn">
+                    Verify & Create Account
+                </button>
+            {% endif %}
+        </form>
+
+        <div class="auth-links">
+            <span>Already have an account?</span>
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+
+</div>
+
+<footer class="auth-footer">
+    © 2026 MS Construction. All Rights Reserved.
+</footer>
+
+<!-- PASSWORD STRENGTH SCRIPT -->
+<script>
+const pwd = document.querySelector('input[name="password"]');
+const bar = document.getElementById('strength-bar');
+const text = document.getElementById('strength-text');
+
+if (pwd) {
+    pwd.addEventListener('input', () => {
+        const v = pwd.value;
+        let s = 0;
+        if (v.length > 7) s++;
+        if (/[A-Z]/.test(v)) s++;
+        if (/[0-9]/.test(v)) s++;
+        if (/[^A-Za-z0-9]/.test(v)) s++;
+
+        if (s <= 1) {
+            bar.style.width = '25%';
+            bar.style.background = '#ef4444';
+            text.innerText = 'Weak';
+        } else if (s === 2) {
+            bar.style.width = '50%';
+            bar.style.background = '#f59e0b';
+            text.innerText = 'Medium';
+        } else if (s === 3) {
+            bar.style.width = '75%';
+            bar.style.background = '#22c55e';
+            text.innerText = 'Strong';
+        } else {
+            bar.style.width = '100%';
+            bar.style.background = '#16a34a';
+            text.innerText = 'Very Strong';
+        }
+    });
+}
+</script>
+
+</body>
+</html>
