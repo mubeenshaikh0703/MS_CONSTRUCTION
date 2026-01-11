@@ -23,9 +23,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'core',
-    'accounts',
-    'booking',
+    'msconstruction.core',
+    'msconstruction.accounts',
+    'msconstruction.booking',
 ]
 
 # -------------------------------------------------
