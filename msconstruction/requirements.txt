@@ -1,4 +1,0 @@
-Django==6.0.1
-gunicorn==21.2.0
-reportlab==4.0.9
-Pillow==10.3.0
