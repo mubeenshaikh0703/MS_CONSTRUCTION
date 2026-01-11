@@ -99,6 +99,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'msroyal0703@gmail.com'   # YOUR REAL GMAIL
-EMAIL_HOST_PASSWORD = 'rvdiubwfcjhbnmzg'
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 DEFAULT_FROM_EMAIL = 'MS Construction <msroyal0703@gmail.com>'
